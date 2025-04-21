@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+        <meta charset="UTF-8">
+        <title>Login</title>
+        <style>
+          .input-senha-container {
+            position: relative;
+            width: fit-content;
+          }
+        
+          .input-senha-container input {
+            padding-right: 40px; /* espaço para o botão */
+          }
+        
+          .toggle-senha {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+          }
+        </style>
+        <link rel="stylesheet" href="../static/css/style.css"> 
+</head>
+<body>
+    {% with mensagens = get_flashed_messages() %}
+  {% if mensagens %}
+    <ul style="color: red;">
+      {% for msg in mensagens %}
+        <li>{{ msg }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+    <div class="login-container">
+    <h1>Entrar no sistema</h1>
+    <form action="/login" method="POST">
+        <label for="email">E-mail:</label><br>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <label for="senha">Senha:</label><br>
+        <div class="campo-senha">
+        <input type="password" id="senha" name="senha" required><br><br>
+        <button type="button" class="btn-ver-senha" onclick="toggleSenha('senha', this)">👁️</button>
+
+        <button type="submit">Entrar</button> 
+    </form>
+    <p>Não tem uma conta? <a href="{{ url_for('form_register') }}">Realize seu cadastro</a></p>
+    <script src="{{ url_for('static', filename='js/senha.js') }}"></script>
+    <script>
+      function toggleSenha() {
+        const input = document.getElementById("senha");
+        input.type = input.type === "password" ? "text" : "password";
+      }
+    </script>
+    
+</div>
+</body>
+</html>
+
