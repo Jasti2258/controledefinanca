@@ -18,25 +18,48 @@
   {% endwith %}
 
   <form method="POST" action="/save_usuario">
+    <label>Nome:</label><br>
+    <input type="text" name="nome" required><br><br>
+
+    <label>Telefone:</label>
+    <input type="tel" name="telefone" required><br><br>
+
+    <label>Documento (CPF ou CNPJ):</label>
+    <input type="text" name="documento" required><br><br>
+
     <label>Email:</label><br>
     <input type="email" name="email" required><br><br>
 
     <label>Senha:</label><br>
-    <input type="password" name="senha" required><br><br>
-    <button type="button" onclick="mostrarSenha('senha')">👁️</button><br><br>
-
+    <input type="password" name="senha" id="senha" required><br><br>
+    <button type="button" class="toggle-senha" onclick="toggleSenha('senha', this)">👁️</button>
     <button type="submit">Cadastrar</button>
   </form>
 
   <br>
   <a href="/">Voltar para login</a>
+
+  <script>
+    function toggleSenha() {
+      const inputSenha = document.getElementById('senha');
+      const btn = document.querySelector('.toggle-senha');
+      
+      if (inputSenha.type === 'password') {
+        inputSenha.type = 'text';
+        btn.textContent = '👁️'; // Muda o ícone para "olhos fechados"
+        
+        // Esconde novamente após 5 segundos
+        setTimeout(() => {
+          inputSenha.type = 'password';
+          btn.textContent = '👁️';
+        }, 5000);
+        
+      } else {
+        inputSenha.type = 'password';
+        btn.textContent = '👁️';
+      }
+    }
+  </script>
 </body>
-
-  <label for="senha">Senha:</label>
-  <div style="position: relative;">
-  <input type="password" id="senha" name="senha" required>
-  <button type="button" class="btn-ver-senha" onclick="toggleSenha('senha', this)">👁️</button>
-
-  </button>
 </div>
 </html>

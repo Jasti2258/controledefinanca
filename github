@@ -1,0 +1,10 @@
+git status - ver os arquivos/alterações que não estão no github
+git add . - adicionar arquivos/alterações para commitar
+git commit -m "mensagem" - commitar/confirmar arquivos/alterações passando uma mensagem simples sobre o que foi alterado
+git push - subir as alterações confirmadas no commit para o github
+
+
+
+
+senha MySQL:
+Stefany2311 

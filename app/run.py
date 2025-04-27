@@ -33,7 +33,10 @@ def save_usuario():
     if request.method == "POST": 
         dados = {
             "email": request.form["email"],
-            "senha": request.form["senha"]
+            "senha": request.form["senha"],
+            "nome": request.form["nome"],
+            "telefone": request.form["telefone"],
+            "documento": request.form["documento"]
         }
 
         sucesso = persist_table.persist_usuario(dados)

@@ -36,6 +36,9 @@ def persist_usuario(dados):
     try: 
         email = dados["email"]
         senha = dados["senha"]
+        nome = dados["nome"]
+        telefone = dados["telefone"]
+        documento = dados["documento"]
         senha_criptografada = hashlib.sha256(senha.encode()).hexdigest()
 
         conn = pymysql.connect(
@@ -47,8 +50,8 @@ def persist_usuario(dados):
         )
 
         cursor = conn.cursor(pymysql.cursors.DictCursor)
-        sql = "INSERT INTO usuario (email, senha, nome, telefone, documento) VALUES (%s, %s)"
-        cursor.execute(sql, (email, senha_criptografada))
+        sql = "INSERT INTO usuario (email, senha, nome, telefone, documento) VALUES (%s, %s, %s, %s, %s)"
+        cursor.execute(sql, (email, senha_criptografada, nome, telefone, documento))
         conn.commit()
 
         cursor.close()
