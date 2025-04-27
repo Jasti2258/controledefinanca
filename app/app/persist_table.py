@@ -1,6 +1,6 @@
-import mysql.connector
 from datetime import datetime
 import hashlib
+import pymysql
 
 def persist_controle_financa(dados):
     try:
@@ -12,10 +12,10 @@ def persist_controle_financa(dados):
 
         data = datetime.strptime(data, "%Y-%m-%d").date()
 
-        db = mysql.connector.connect(
+        db = pymysql.connect(
             host="localhost",
-            user="usuario",
-            password="minhasenha123",
+            user="root",
+            password="Stefany2311",
             database="financa",
             port="3306"
         )
@@ -33,28 +33,28 @@ def persist_controle_financa(dados):
         return False
 
 def persist_usuario(dados):
-    try:
+    try: 
         email = dados["email"]
         senha = dados["senha"]
-        
         senha_criptografada = hashlib.sha256(senha.encode()).hexdigest()
 
-        conn = mysql.connector.connect(
+        conn = pymysql.connect(
             host="localhost",
-            user="usuario",
-            password="minhasenha123",
-            database="financa" 
+            user="root",
+            password="Stefany2311",
+            database="financa",
+            port=3306
         )
 
-        cursor = conn.cursor()
-        sql = "INSERT INTO usuario (email, senha) VALUES (%s, %s)"
+        cursor = conn.cursor(pymysql.cursors.DictCursor)
+        sql = "INSERT INTO usuario (email, senha, nome, telefone, documento) VALUES (%s, %s)"
         cursor.execute(sql, (email, senha_criptografada))
         conn.commit()
 
         cursor.close()
         conn.close()
         return True
-    
-    except mysql.connector.Error as err:
+
+    except pymysql.Error as err:
         print("Erro ao cadastrar:", err)
         return False

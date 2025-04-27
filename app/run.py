@@ -1,12 +1,9 @@
 from flask import Flask, request, render_template, redirect, url_for, session, flash
-import mysql.connector
-from datetime import datetime
 import app.persist_table as persist_table
 import app.login_utils as login_utils
-from app import login_utils
-from app.login_utils import db
+import pymysql
 
-
+pymysql.install_as_MySQLdb()
 app = Flask(__name__)
 app.secret_key = 'alguma_coisa_bem_secreta'
 
@@ -20,20 +17,16 @@ def form_register():
 
 @app.route("/form_controle_financa")
 def form_controle_financa():
-    return render_template("form_controle_financa.html")
-
-@app.route("/dashboard")
-def dashboard():
     if "usuario_id" not in session:
         flash("Você precisa estar logado.")
-        return redirect(url_for("login"))
-    return render_template("dashboard.html", email=session["usuario_email"])
+        return redirect(url_for("index"))
+    return render_template("form_controle_financa.html", nome=session["usuario_nome"])
 
 @app.route("/logout")
 def logout():
     session.clear()
     flash("Você saiu com sucesso.")
-    return redirect(url_for("login"))
+    return redirect(url_for("index"))
 
 @app.route("/save_usuario", methods=["POST"])
 def save_usuario():
@@ -77,20 +70,12 @@ def login():
            "email": request.form["email"],
            "senha": request.form["senha"]
         }
-
-        email = dados["email"]
-        senha = dados["senha"]
-
-        cursor = db.cursor(dictionary=True)
-        cursor.execute("SELECT * FROM usuario WHERE email = %s AND senha = %s", (email, senha))
-        usuario = cursor.fetchone()
-        cursor.close()
         
-
         usuario = login_utils.check_login(dados) 
         if usuario:
             session["usuario_id"] = usuario["id"]
             session["usuario_email"] = usuario["email"]
+            session["usuario_nome"] = usuario["nome"]
             flash("Login realizado com sucesso!") 
             return redirect(url_for("form_controle_financa"))
         else:
