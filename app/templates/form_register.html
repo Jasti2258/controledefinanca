@@ -18,23 +18,33 @@
   {% endwith %}
 
   <form method="POST" action="/save_usuario">
-    <label>Nome:</label><br>
-    <input type="text" name="nome" required><br><br>
+      <div class="input-group">
+        <span>👤</span>
+        <input type="text" name="nome" placeholder="Nome" required />
+      </div>
 
-    <label>Telefone:</label>
-    <input type="tel" name="telefone" required><br><br>
+      <div class="input-group">
+        <span>📞</span>
+        <input type="tel" name="telefone" placeholder="Telefone" required />
+      </div>
 
-    <label>Documento (CPF ou CNPJ):</label>
-    <input type="text" name="documento" required><br><br>
+      <div class="input-group">
+        <span>📧</span>
+        <input type="email" name="email" placeholder="E-mail" required />
+      </div>
 
-    <label>Email:</label><br>
-    <input type="email" name="email" required><br><br>
+      <div class="input-group">
+        <span>🔒</span>
+        <input type="password" name="senha" placeholder="Senha" required />
+      </div>
 
-    <label>Senha:</label><br>
-    <input type="password" name="senha" id="senha" required><br><br>
-    <button type="button" class="toggle-senha" onclick="toggleSenha('senha', this)">👁️</button>
-    <button type="submit">Cadastrar</button>
-  </form>
+      <div class="input-group">
+        <span>🪪</span>
+        <input type="text" name="documento" placeholder="Documento" required />
+      </div>
+
+      <button type="submit" class="btn">Cadastrar</button>
+    </form>
 
   <br>
   <a href="/">Voltar para login</a>
